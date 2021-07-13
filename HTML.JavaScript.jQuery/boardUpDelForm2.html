@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <center>
+    [글 수정/삭제]
+    <form >
+    <table border="1" style="border-collapse: collapse;">
+      <tr>
+        <th bgcolor="lightgray">이름</th>
+        <td><input type="text" name="writer" maxlength="7" value="사오정"></td>
+      </tr>
+      <tr>
+        <th bgcolor="lightgray">제목</th>
+        <td><input type="text" name="subject" size=50 maxlength="20" value="경제 침체의 원인"></td>
+      </tr>
+      <tr>
+        <th bgcolor="lightgray">Email</th>
+        <td><input type="text" name="email" size=50 maxlength="30" value="b@naver.com"></td>
+      </tr>
+      <tr>
+        <th bgcolor="lightgray">내용</th>
+        <td><textarea name="content" cols="50" rows="20">어쩌구 저쩌구</textarea></td>
+      </tr>
+      <tr>
+        <th bgcolor="lightgray">비밀번호</th>
+        <td><input type="password" name="pwd" maxlength="4"></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td height=3></td>
+      </tr>
+    </table>
+    <input type="button" value="수정">
+    <input type="button" value="삭제">
+    <input type="reset" value="초기화">
+    <input type="button" value="전체 글 보기" onclick="location.replace('boardList.html')">
+    <input type="button" value="로그아웃" onclick="location.replace('loginForm.html')">
+  </form>
+  </center>
+</body>
+</html>
