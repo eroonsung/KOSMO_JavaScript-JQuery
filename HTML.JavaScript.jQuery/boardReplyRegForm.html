@@ -16,10 +16,10 @@
     function checkRegForm() {
 
       //----------------------------------------
-      //변수 formObj을 선언하고 <form name="boardRegForm"> 태그를 관리하는 
+      //변수 formObj을 선언하고 <form name="boardReplyRegForm"> 태그를 관리하는 
       //form 객체의 매위주 저장하기
       //----------------------------------------
-      var formObj = document.boardRegForm;
+      var formObj = document.boardReplyRegForm;
 
       //유저가 입력한 이름을 가져와서 변수 writer에 저장하기
       //유저가 입력한 제목을 가져와서 변수 subject에 저장하기
@@ -46,8 +46,7 @@
 
       if (isValidPattern(new RegExp(/^[가-힣]{2,10}$/), writer) == false) {
         alert("이름은 한글 2~10자 사이어야합니다.");
-        formObj.writer.value="";
-        //<form name="boardRegForm"> 태그 안의 <input type=text name=writer~> 태그에 포커스 넣기
+        //<form name="boardReplyRegForm"> 태그 안의 <input type=text name=writer~> 태그에 포커스 넣기
         formObj.writer.focus();
         return;
       }
@@ -93,7 +92,7 @@
       //----------------------------------------
       //유저가 입력한 [내용]의 유효성 체크하기
       //----------------------------------------
-      //만약에 내용이 비어있거나 공백으로만 입력되어있다면 isEmpty를 호출해서
+      //만약에 제목이 비어있거나 공백으로만 입력되어있다면 isEmpty를 호출해서
       // 내용이 비어있으면 
       if (isEmpty(content)) {
         alert("내용은 비어있거나 공백으로 구성되면 안됩니다.");
@@ -144,8 +143,8 @@
         }
       }
       //confirm 함수 호출로 confirm 상자를 열고 확인 버튼을 누르면
-      if (confirm("새글쓰기를 정말 할까요?")) {
-        //<form name="boardRegForm" action="boardRegProc.html"> 태그의 action 값에 설정된 서버쪽 페이지 호출하여 열기
+      if (confirm("댓글쓰기를 정말 할까요?")) {
+        //<form name="boardReplyRegForm" action="boardRegProc.html"> 태그의 action 값에 설정된 서버쪽 페이지 호출하여 열기
         formObj.submit();
       }
     }
@@ -155,20 +154,21 @@
     //개발 과정에서 쉽게 하기 위한 방법(유효성 체크를 위함) -> 일일이 입력하지 않아도 값이 들어가 있음
     //개발이 완료되면 이 함수만 삭제하면 됨
     function setting() {
-      document.boardRegForm.writer.value = "성이현";
-      document.boardRegForm.subject.value = "안녕하세요";
-      document.boardRegForm.email.value = "sung7290@gmail.com";
-      document.boardRegForm.content.value = "어쩌구저쩌구";
-      document.boardRegForm.pwd.value = "1234";
+      return; // 데이터가 들어가지 못하게 return으로 막음
+      document.boardReplyRegForm.writer.value = "성이현";
+      document.boardReplyRegForm.subject.value = "안녕하세요";
+      document.boardReplyRegForm.email.value = "sung7290@gmail.com";
+      document.boardReplyRegForm.content.value = "어쩌구저쩌구";
+      document.boardReplyRegForm.pwd.value = "1234";
     }
   </script>
 </head>
 
 <body onload="setting();">
   <center>
-    [새 글 쓰기]
+    [댓글 쓰기]
     <!-- 파일을 실제로 전송하려면 enctype="multipart/form-data" 삽입해야함-->
-    <form name="boardRegForm" enctype="multipart/form-data" action="boardRegProc.html">
+    <form name="boardReplyRegForm" enctype="multipart/form-data" action="boardReplyRegProc.html">
       <table border="1" style="border-collapse: collapse;">
         <!-- 유효성 검사를 할 때 일일이 입력하지 않고 미리 value 값을 넣어두면 쉽게 검사할 수 있음 -->
         <tr>
@@ -189,7 +189,7 @@
         </tr>
 
         <tr>
-          <th bgcolor="lightgray">이미지</th>
+          <th bgcolor="lightgray">사진</th>
           <td><input type="file" name="pic"></td>
         </tr>
         <tr>

@@ -1,46 +1,202 @@
 <!DOCTYPE html>
-<html >
+<html>
+
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <script src="common_func.js"></script>
+  <script>
+    // 수정버튼 눌렀을때 작동하는 함수
+    function checkUpForm() {
+      var formObj = document.boardUpForm;
+      //***************************************
+      // 입력된 데이터 구해서 변수에 저장하기
+      //***************************************
+      var pwd = formObj.pwd.value;
+      //***************************************
+      //비밀번호는 유효성 체크 대상이 아님, 수정 또는 삭제가 가능한 지 여부 확인
+      //***************************************
+      //암호가 비어있을 경우 경고창 띄우고 함수 중단
+      if (isEmpty(pwd)) {
+        alert("암호를 입력해주세요.");
+        return;
+      }
+      //암호가 틀렸을 경우 경고창 띄우고 함수 중단
+      if (pwd != 1234) {
+        alert("암호가 틀려서 수정 또는 삭제가 불가능합니다.");
+        formObj.pwd.value = "";
+        return;
+      }
+      var writer = formObj.writer.value;
+      var subject = formObj.subject.value;
+      var email = formObj.email.value;
+      var content = formObj.content.value;
+      var pic = formObj.pic.value;
+
+      //***************************************
+      //유효성 체크하기
+      //***************************************
+      //---------------------------------------
+      //이름
+      //---------------------------------------
+      if (isValidPattern(new RegExp(/^[가-힣]{2,10}$/), writer) == false) {
+        alert("이름은 한글 2~10자 사이어야합니다.");
+        formObj.writer.value = "";
+        //<form name="boardRegForm"> 태그 안의 <input type=text name=writer~> 태그에 포커스 넣기
+        formObj.writer.focus();
+        return;
+      }
+
+      //---------------------------------------
+      //제목
+      //---------------------------------------
+      //common_func에 만들어 놓은 isEmpty 함수 사용하기
+      if (isEmpty(subject)) {
+        alert("제목은 비어있거나 공백으로 구성되면 안됩니다.");
+        // 제목 입력 칸을 아예 비게 하고 다시 입력하게 하기(값을 비우기)
+        formObj.subject.value = "";
+        formObj.subject.focus();
+        // 함수 중단하기
+        return;
+      }
+
+      //만약에 제목이 2~30자 범위를 넘어가면
+      //if(subject.length<2||subject.length>30)
+      if (!(subject.length >= 2 && subject.length <= 30)) {
+        alert("제목은 2~30자 범위를 벗어나면 안됩니다.");
+        formObj.subject.value = "";
+        formObj.subject.focus();
+        // 함수 중단하기
+        return;
+      }
+
+      //---------------------------------------
+      //이메일
+      //---------------------------------------
+      if (isValidEmail(email) == false) {
+        alert("이메일 형식이 아닙니다.");
+        formObj.email.value = "";
+        formObj.email.focus();
+        // 함수 중단하기
+        return;
+      }
+
+      //---------------------------------------
+      //내용
+      //---------------------------------------
+      // 내용이 비어있으면 
+      if (isEmpty(content)) {
+        alert("내용은 비어있거나 공백으로 구성되면 안됩니다.");
+        formObj.content.value = "";
+        formObj.content.focus();
+        // 함수 중단하기
+        return;
+      }
+
+      //만약에 내용이 900자 범위를 넘어가면
+      // 오라클의 자료형에 한계가 있기 때문에 자스에서 유효성 검사를 해야함
+      if (content.length >= 900) {
+        alert("내용은 900자 이하를 입력해야 합니다.");
+        formObj.content.focus();
+        // 함수 중단하기
+        return;
+      }
+
+      //---------------------------------------
+      //이미지
+      //---------------------------------------
+      // 만약 이미지가 선택되었으면
+      //이미지 파일이 비어있지 않을 때
+      if (isEmpty(pic) == false) {
+        //  선택된 이미지파일의 확장자가 .jpg 또는 .png가 아니면 경고하고 함수 중단
+        //(/\.(jpg|.png|.JPG|.PNG)/)
+        if (isValidPattern(/\.(jpg|png)$/, pic.toLowerCase()) == false) {
+          // if (isValidPattern(/(\.jpg|\.png|\.JPG|\.PNG)$/, pic) == false) {
+          alert("선택하신 파일의 확장자는 jpg 또는 png 이어야 합니다.");
+          formObj.pic.value = "";
+          //경고하고 함수 중단
+          return;
+        }
+      }
+
+
+      //confirm 함수 호출로 confirm 상자를 열고 확인 버튼을 누르면
+      if (confirm("정말 수정하시겠습니까?")) {
+        //<form name="boardRegForm" action="boardRegProc.html"> 태그의 action 값에 설정된 서버쪽 페이지 호출하여 열기
+        formObj.submit();
+      }
+    }
+    //삭제 버튼을 눌렀을 때 작동하는 함수
+    function checkDelForm() {
+      var formObj = document.boardUpForm;
+      var pwd = formObj.pwd.value;
+      if (isEmpty(pwd)) {
+        alert("암호를 입력해주세요.");
+        return;
+      }
+      //암호가 틀렸을 경우 경고창 띄우고 함수 중단
+      if (pwd != 1234) {
+        alert("암호가 틀려서 수정 또는 삭제가 불가능합니다.");
+        formObj.pwd.value = "";
+        return;
+      }
+      //confirm 함수 호출로 confirm 상자를 열고 확인 버튼을 누르면
+      if (confirm("정말 삭제하시겠습니까?")) {
+        //<form name="boardRegForm" action="boardRegProc.html"> 태그의 action 값에 설정된 서버쪽 페이지 호출하여 열기
+        document.boardDelForm.submit();
+      }
+    }
+  </script>
 </head>
+
 <body>
   <center>
     [글 수정/삭제]
-    <form >
-    <table border="1" style="border-collapse: collapse;">
-      <tr>
-        <th bgcolor="lightgray">이름</th>
-        <td><input type="text" name="writer" maxlength="7" value="사오정"></td>
-      </tr>
-      <tr>
-        <th bgcolor="lightgray">제목</th>
-        <td><input type="text" name="subject" size=50 maxlength="20" value="경제 침체의 원인"></td>
-      </tr>
-      <tr>
-        <th bgcolor="lightgray">Email</th>
-        <td><input type="text" name="email" size=50 maxlength="30" value="b@naver.com"></td>
-      </tr>
-      <tr>
-        <th bgcolor="lightgray">내용</th>
-        <td><textarea name="content" cols="50" rows="20">어쩌구 저쩌구</textarea></td>
-      </tr>
-      <tr>
-        <th bgcolor="lightgray">비밀번호</th>
-        <td><input type="password" name="pwd" maxlength="4"></td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td height=3></td>
-      </tr>
-    </table>
-    <input type="button" value="수정">
-    <input type="button" value="삭제">
-    <input type="reset" value="초기화">
-    <input type="button" value="전체 글 보기" onclick="location.replace('boardList.html')">
-    <input type="button" value="로그아웃" onclick="location.replace('loginForm.html')">
-  </form>
+    <form name="boardUpForm" enctype="multipart/form-data" action="boardUpProc.html">
+      <table border="1" style="border-collapse: collapse;">
+        <tr>
+          <th bgcolor="lightgray">이름</th>
+          <td><input type="text" name="writer" maxlength="7" value="사오정"></td>
+        </tr>
+        <tr>
+          <th bgcolor="lightgray">제목</th>
+          <td><input type="text" name="subject" size=50 maxlength="20" value="경제 침체의 원인"></td>
+        </tr>
+        <tr>
+          <th bgcolor="lightgray">Email</th>
+          <td><input type="text" name="email" size=50 maxlength="30" value="b@naver.com"></td>
+        </tr>
+        <tr>
+          <th bgcolor="lightgray">내용</th>
+          <td><textarea name="content" cols="50" rows="20">어쩌구 저쩌구</textarea></td>
+        </tr>
+        <tr>
+          <th bgcolor="lightgray">이미지</th>
+          <td>
+            <img src="img/timothee.jpeg" width="50%"><br>
+            <input type="file" name="pic">
+          </td>
+        </tr>
+        <tr>
+          <th bgcolor="lightgray">비밀번호</th>
+          <td><input type="password" name="pwd" maxlength="4"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td height=3></td>
+        </tr>
+      </table>
+      <input type="button" value="수정" onclick="checkUpForm();">
+      <input type="button" value="삭제" onclick="checkDelForm()">
+      <input type="reset" value="초기화">
+      <input type="button" value="전체 글 보기" onclick="location.replace('boardList.html')">
+      <input type="button" value="로그아웃" onclick="location.replace('loginForm.html')">
+    </form>
+<!-- =============================================== -->
+    <form name= "boardDelForm" action="boardDelProc.html" ></form>
+
   </center>
 </body>
+
 </html>

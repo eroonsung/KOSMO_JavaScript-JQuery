@@ -23,9 +23,11 @@
       //유저가 입력한 회원명을 가져와서 변수 mem_name에 저장하기
       //유저가 입력한 아이디를 가져와서 변수 uid에 저장하기
       //유저가 입력한 암호를 가져와서 변수 pwd에 저장하기
+      //유저가 입력한 주소를 가져와서 변수 pwd에 저장하기
       var mem_name = formObj.mem_name.value;
       var uid = formObj.uid.value;
       var pwd = formObj.pwd.value;
+      var addr = formObj.addr.value;
       // 성별이랑 취미는 내가 입력하는 것이 아니라 선택해야 하는 것이기 때문에 다른 차원에서 접근해야함
 
       //----------------------------------------
@@ -82,6 +84,16 @@
         alert("암호는 영소문자 또는 숫자로 5~8자로 구성되어야 합니다.");
         form.pwd.value = "";
         formObj.pwd.focus();
+        return;
+      }
+      //----------------------------------------
+      //[주소] select-option의 유효성 검사
+      // 주소가 하나라도 체크가 안되어 있으면 경고하고 함수 중단
+      //----------------------------------------      
+      //if(fromObj.addr.value=="") -> 이 코딩도 가능함
+      if(isEmpty(addr)){
+        alert("주소는 필수 선택해야합니다.");
+        formObj.addr.focus();
         return;
       }
 
@@ -229,12 +241,26 @@
           <td><input type="password" name="pwd"></td>
         </tr>
         <tr>
+          <th bgcolor="lightgray">거주지</th>
+          <td>
+            <select name="addr">
+              <!-- value 값이 비어있기 때문에 선택 필요 없음 -->
+                <option value="">--선택요망--</option>
+                <option value="서울">서울</option>
+                <option value="경기">경기</option>
+                <option value="인천">인천</option>
+                <option value="기타">기타</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
           <th bgcolor="lightgray">성별</th>
           <td>
             <!-- name 값이 똑같은 것들끼리 하나만 선택 됨 -->
             <!-- radio 버튼은 최소 두개 이상 존재해야 함-->
-            <input type="radio" name="gender" value="남">남
             <input type="radio" name="gender" value="여">여
+            <input type="radio" name="gender" value="남">남
+
           </td>
         </tr>
         <tr>
@@ -253,6 +279,7 @@
             <input type="checkbox" name="confirm" value="동의">동의(가입하신 개인정보는 보관이 됩니다.)
           </td>
         </tr>
+      
       </table><br>
       <input type="button" value="저장" onclick="checkMemRegForm();">
       <input type="reset" value="초기화"><br><br>
@@ -260,6 +287,8 @@
       <input type="button" value="로그인 화면으로" onclick="location.replace('loginForm.html')">
 
     </form>
+
+
 </body>
 
 </html>
