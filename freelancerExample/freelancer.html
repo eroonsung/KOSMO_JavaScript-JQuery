@@ -179,6 +179,10 @@
       }
       //===이적여부===
 
+      if (confirm("이력서 등록을 정말 할까요?")) {
+        formObj.submit();
+      }
+
     }
 
     //**************************************** 
@@ -207,7 +211,7 @@
 <body onload="setting();">
   <br>
   <center>
-    <form name="freelancerForm" >
+    <form name="freelancerForm" action="freelancerProc.html">
       <table border="1" style="border-collapse: collapse;" width="80%" cellpadding=5>
         <tr>
           <th colspan="6" bgcolor="lightgray">프리랜서 이력</th>
