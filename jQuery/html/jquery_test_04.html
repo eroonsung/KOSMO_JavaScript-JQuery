@@ -1,0 +1,74 @@
+<html>
+<meta charset="UTF-8">
+
+<head>
+	<script src="jquery-1.11.0.min.js"></script>
+	<script>
+		//**********************************************
+		//$(document).ready(   function(){자스코딩}  );
+		//**********************************************
+		// body 태그 안의 요소들을 읽어들인 후 익명함수 내부의 자스코딩을 실행.
+		//전체 체크하면 밑에 다 체크, 전체 풀면 다 풀림
+		//따로따로 체크하다가 전체 다 체크하면 전체에 체크됨
+		
+		$(document).ready(function () {
+		/*
+			$("[name='hobby_all']").change(
+				function () {
+					var isAllChecked = $("[name='hobby_all']").prop("checked");
+					if (isAllChecked) {
+						$("[name='hobby']").prop("checked", true);
+					} else {
+						$("[name='hobby']").prop("checked", false);
+					}
+				}
+			)
+
+			$("[name='hobby']").change(
+				function () {
+					allCnt = $("[name='hobby']").length;
+					checkedCnt = $("[name='hobby']:checked").length;
+					if (checkedCnt == allCnt) {
+						$("[name='hobby_all']").prop("checked", true);
+					} else {
+						$("[name='hobby_all']").prop("checked", false);
+					}
+				})
+*/
+				var obj1 = $("[name='hobby_all']");
+				var obj2 = $("[name='hobby']");
+
+				obj1.change(function(){
+					//방법 1: if문 사용
+					/*
+					var isChecked = $(this).prop("checked");
+					if(isChecked){
+						obj2.prop("checked", true);
+					}else{
+						obj2.prop("checked", false);
+					}
+					*/
+					//방법 2: check 여부를 바로 집어 넣음
+					//obj2의 체크 여부는 obj1의 체크 여부와 동일함
+					obj2.prop("checked", $(this).prop("checked"));
+				})
+				obj2.change(function(){
+					obj1.prop("checked", obj2.filter(":checked").length==obj2.length);
+					// 체크된 놈의 개수와 현재 있는 놈의 개수를 비교
+				})
+		});
+	</script>
+</head>
+
+<body>
+	<center>
+		<hr>
+		<input type="checkbox" name="hobby_all">전체
+		<hr>
+		<input type="checkbox" name="hobby" value="독서">독서<br>
+		<input type="checkbox" name="hobby" value="운동">운동<br>
+		<input type="checkbox" name="hobby" value="여행">여행<br>
+		<input type="checkbox" name="hobby" value="수집">수집
+</body>
+
+</html>

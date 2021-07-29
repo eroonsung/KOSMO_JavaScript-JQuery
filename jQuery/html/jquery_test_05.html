@@ -1,0 +1,46 @@
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="jquery-1.11.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var tableObj = $(".dogList");
+			tableObj.find("tr:nth-child(1)").prepend("<th bgcolor='gray'>번호");
+				var table_no = tableObj.find("tr").index();
+				/*
+				tableObj.find("tr:nth-child(1)").nextAll().each(
+					function (i) {
+						$(this).prepend("<td>"+(i+1)+"</td>");
+					}
+				)
+				*/
+				
+				/*
+				//역순
+				$(tableObj.find("tr:nth-child(1)").nextAll().get().reverse()).each(
+					function (i) {
+						$(this).prepend("<td>"+(i+1)+"</td>");
+					}
+				)*/
+				tableObj.find("tr:nth-child(1)").nextAll().each(
+					function (i) {
+						$(this).prepend("<td>"+(tableObj.find("tr").length-i-1)+"</td>");
+					}
+				)
+		});
+	</script>
+	
+</head>
+
+<body><center>
+	<table class="dogList" border=1  cellpadding=4 style="border-collapse:collapse">
+		<tr><th bgcolor="gray">개이름
+		<tr><td>진도개
+		<tr><td>셰퍼드
+		<tr><td>비글
+		<tr><td>삽살개
+		<tr><td>풍산개
+	</table>
+</body>
+</html>
