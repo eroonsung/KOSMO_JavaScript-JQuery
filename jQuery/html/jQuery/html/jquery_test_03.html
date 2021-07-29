@@ -1,0 +1,51 @@
+<!-- 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+jquery_test_03.html
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ -->
+<html>
+<meta charset="UTF-8">
+
+<head>
+	<script src="jquery-1.11.0.min.js"></script>
+	<script>
+		//-------------------------------------------
+		//$(document).ready(   function(){자스코딩}  );
+		//-------------------------------------------
+		// body 태그 안의 요소들을 읽어들인 후 익명함수 내부의 자스코딩을 실행.
+		// 라디오 버튼처럼 하나만 선택할 수 있지만 라디오 버튼과 다르게 체크를 풀 수도 있음
+		$(document).ready(function () {
+			//name="hobby"를 가진 태그에 change이벤트가 발생하면(키보드와 마우스 상관 없이 그냥 체크가 들어갈 수 있도록 change 이벤트 사용)
+			//=================	
+			//change 이벤트란?
+			// checkbox 입장에서 change 이벤트란 체크가 들어가거나 체크가 빠지는 행위를 말함
+			//checkbox 입장에서 change 이벤트는 마우스 또는 키보드에 의해 발생하기도 하지만 자스 코딩에 의해 체크가 들어가거나 빠지는것 또한 change 이벤트이다.
+			$("[name='hobby']").change(
+				function () {
+					//change 이벤트가 발생한 놈을 관리하는 JQuery 객체의 메위주 얻어 변수 thisObj에 저장하기
+					var thisObj = $(this); // checkbox 지칭 선택자
+					//change 이벤트가 발생한 놈의 체크 여부를 변수 isChecked에 저장하기
+					var isChecked = thisObj.prop("checked");
+					//만약 변수 isChecked에 true가 들어있으면 즉 체크가 들어갔으면 (조건문을 사용하지 않아도 코드가 실행되긴 하지만 그래도 정확하게 하려면 if문 있어야함)
+					if(isChecked){
+						//형제들의 체크를 풀기
+						thisObj.siblings().prop("checked",false);
+						//위 코딩은 아래 코딩처럼도 가능함
+						//thisObj.prevAll().prop("checked",false);
+						//thisObj.nextAll().prop("checked",false);
+					}
+				}
+			)
+		});
+	</script>
+</head>
+
+<body>
+	<center>
+		<input type="checkbox" name="hobby" value="독서">독서<br>
+		<input type="checkbox" name="hobby" value="운동">운동<br>
+		<input type="checkbox" name="hobby" value="여행">여행<br>
+		<input type="checkbox" name="hobby" value="수집">수집
+</body>
+
+</html>
