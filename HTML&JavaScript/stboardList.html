@@ -1,0 +1,140 @@
+<html>
+<meta charset="UTF-8">
+<head>
+    <title></title>
+	<script src = "stcommon_func.js"></script>
+	<script src = "common_data.js"></script>
+
+	<script>
+		// 요일별 메세지를 보여주는 openMesage 함수 선언하기
+		function openWeekMesage() {
+			// week 변수 선언. getTodayWeek() 함수 호출로 현재 요일 얻어 week 변수에 저장하기
+			var week = getTodayWeek();
+			// msg 변수 선언. 공용 함수 안의 weekMsg 라는 변수에 저장된 
+			// JSON 객체 안에서 week 변수안의 문자를 키값으로 가지고 있는 놈의 대응 문자를 얻어 
+			// 변수 msg 에 저장하기 
+			var msg = weekMsg[week];
+			  alert(msg)
+		}
+
+		function getScheduleMsg() {
+			// common_data.js 파일 안의 scheduleMsg 변수의 2차원 Array 객체 안을 검색
+			/*
+			for ( var i=0; i<scheduleMsg.length; i++ ) {
+				for( var j=0; j<scheduleMsg[i].length; j++ ) {
+					 var data = scheduleMsg[i][j];
+						alert(data)
+				}
+			}*/
+			var tot_msg = "";
+			for ( var i=0; i<scheduleMsg.length; i++ ) {
+					var date = scheduleMsg[i][0];
+					var msg = scheduleMsg[i][1];
+					if( isToday(date) ) {
+						//alert( msg )
+						tot_msg = tot_msg + msg;
+				}
+			}
+			return tot_msg;
+		}
+	</script>
+</head>
+
+<body onLoad="openWeekMesage();getScheduleMsg();">
+	<center>
+		
+	   <form>
+	   게시판&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   <!-- a태그로 [새글쓰기]를 끌어안아서 클릭하면 boardRegForm.html 문서 열기 -->
+	   <!-- <a href="boardRegForm.html">[새글쓰기]</a><br><br> 잠시 주석처리 -->
+
+	   <!-- span태그로 [새글쓰기]를 끌어안아서 클릭하면 boardRegForm.html 문서 열기 -->
+	   <!-- <태그명 on이벤트명="자스코딩"> -->
+	   <!-- 글씨나 이미지를 클릭가능하게 만들고 클릭하면 페이지이동이나 외적인 컨텐츠를 보여주는 것을  
+	        링크를 건다고 한다. -->
+	   <span style="cursor:pointer;" onClick="location.replace('boardRegForm.html')">[새글쓰기]</span>&nbsp;&nbsp;
+
+	   <!-- span태그로 [새글쓰기]를 끌어안아서 클릭하면 loginForm.html 문서 열기 -->
+	   <span style="cursor:pointer;" onClick="location.replace('loginForm.html')">[로그아웃]</span>
+
+	   <table border=0 style="border-collapse:collapse" cellpadding=5>
+			<tr bgcolor="lightgray" style="cursor:pointer">
+				<th>번호</th>
+				<th width=250>제목</th>
+				<th>성명</th>
+				<th>작성일</th>
+				<th>조회수</th> 
+			</tr>
+
+			<tr style="cursor:pointer" onClick="location.replace('boardContentForm1.html');">
+				<td align=center>6</td>
+				<td>청년 실직 문제는 대기업 문제</td>
+				<td align=center>설현</td>
+				<td>2011.12.06</td>
+				<td align=center>0</td>
+			</tr>
+
+			<tr bgcolor="#F2F2F2" style="cursor:pointer" onClick="location.replace('boardContentForm2.html');">
+				<td align=center>5</td>
+				<td>경제 침체의 원인</td>
+				<td align=center>사오정</td>
+				<td>2011.12.01</td>
+				<td align=center>2</td>
+			</tr>
+
+			<tr style="cursor:pointer" onClick="location.replace('boardContentForm3.html');">
+				<td align=center>4</td>
+				<td>&nbsp;&nbsp;&nbsp;ㄴ안보문제</td>
+				<td align=center>하하</td>
+				<td>2011.12.03</td>
+				<td align=center>1</td>
+			</tr>
+
+			<tr bgcolor="#F2F2F2" style="cursor:pointer" onClick="location.replace('boardContentForm4.html');">
+				<td align=center>3</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㄴ북한 핵 문제</td>
+				<td align=center>전지현</td>
+				<td>2011.12.05</td>
+				<td align=center>0</td>
+			</tr>
+
+			<tr style="cursor:pointer" onClick="location.replace('boardContentForm5.html');">
+				<td align=center>2</td>
+				<td>&nbsp;&nbsp;&nbsp;ㄴ나라 빚 관리 부실</td>
+				<td align=center>저팔계</td>
+				<td>2011.12.02</td>
+				<td align=center>1</td>
+			</tr>
+
+			<tr bgcolor="#F2F2F2" style="cursor:pointer" onClick="location.replace('boardContentForm6.html');">
+				<td align=center>1</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㄴ엔화 하락 문제</td>
+				<td align=center>김태희</td>
+				<td>2011.12.04</td>
+				<td align=center>0</td>
+			</tr>
+
+		</table><br>
+	
+
+	[처음][이전] 1 [2] [3] [4] [5] [6] [7] [8] [9] [10] [다음] [마지막]<br><br>
+	<input type="text" name="keyword">
+	<input type="button" value="검색">
+	<input type="button" value="모두 검색">
+	</form>	
+
+	<br><br><br>
+
+	<script>
+		document.write( getTodayYMDW() );
+		document.write( "<br>" );
+		document.write( getScheduleMsg() );
+	</script>
+
+	</center>
+</body>
+
+</html>
+
+
+

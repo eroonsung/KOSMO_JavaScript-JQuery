@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>로그인 화면</title>
+  <script src="common_func.js"></script>
+  <!-- -------------------------- -->
+  <!-- script 태그 선언, script 태그는 자바스크립트 세상 -->
+  <!-- Javascript는 HTML에 딸려서 쓰임 -->
+  <!-- -------------------------- -->
+  <script>
+    //자바스크립트 영역
+    //--------------------------
+
+    //checkForm 함수 선언
+    //유저가 입력한 아이디와 암호의 유효성을 체크할 checkForm 함수 선언
+    function checkForm() {
+      //()괄호 안에는 매개 변수가 들어감
+      //유저가 입력한 아이디를 가져와서 변수 uid에 저장하기
+      //value는 Text 객체의 속성변수
+      // Text 객체는 <input type="text" name="uid" size=10> 태그를 관리하는 객체
+      //<input type="text" name="uid" size=10> 에 입력한 아이디를 구해서 자스 변수 uid에 저장하기
+      var uid = document.loginForm.uid.value;
+
+      //유저가 입력한 비밀번호를 가져와서 변수 pwd에 저장하기
+      var pwd = document.loginForm.pwd.value;
+      /*
+                  //만약에 유저가 입력한 아이디가 비어있거나 공백으로 이루어져 있으면
+                  if (uid.split(" ").join("")=="") {
+                    //경고상자 띄우기
+                    alert("아이디가 비어있음. 입력 바람");
+                    //함수 중단하기. 이후 코딩은 실행되지 않음
+                      // 함수의 암살자 : return
+                    return;
+                  }
+            
+                  //만약에 유저가 입력한 암호가 비어있거나 공백으로 이루어져 있으면
+                  if (pwd.split(" ").join("")=="") {
+                    //경고상자 띄우기
+                    alert("암호가 비어있음. 입력 바람");
+                    //함수 중단하기
+                    return;
+                  }
+      */
+      // isEmpty 함수 호출하여 true를 리턴받으면 즉 비어있거나 공백으로 이루어져 있으면
+      if (isEmpty(uid)) {
+        //경고상자 띄우기
+        alert("아이디가 비어있음. 입력 바람");
+        //함수 중단하기. 이후 코딩은 실행되지 않음
+        // 함수의 암살자 : return
+        return;
+      }
+
+      if (isEmpty(pwd)) {
+        //경고상자 띄우기
+        alert("암호가 비어있음. 입력 바람");
+        //함수 중단하기. 이후 코딩은 실행되지 않음
+        // 함수의 암살자 : return
+        return;
+      }
+
+      //만약에 아이디가 "abc"이고 암호가 "123"이면
+      if (uid == "abc" && pwd == "123") {
+        
+        if(confirm("로그인할까요?")){
+        //form태그에 설정한 서버쪽 URL 주소로 접근하기
+        //즉 새로운 페이지 열기
+        document.loginForm.submit();
+        }
+
+      } else {
+        alert("아이디 또는 암호가 틀렸음. 재입력 바람");
+        //아이디 입력란 비우기
+        document.loginForm.uid.value = "";
+        document.loginForm.pwd.value = "";
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <center><br><br><br>
+    <!-- [로그인] <br>
+    아이디 : <input type="text" name="uid"> <br>
+    암 호 : <input type="text" name="pwd"> <br><br>
+    <input type="button" value="로그인"> -->
+    <!-- 테이블 태그는 한 행을 독차지함 -->
+    <!-- action="서버의 url 주소" -->
+    <form name="loginForm" action="boardList.html">
+      <!-- -------------------------- -->
+      <table border="0" cellpadding=4>
+        <!-- -------------------------- -->
+        <tr>
+          <th>[로그인]</th>
+        </tr>
+        <tr>
+          <td align="center">
+            <!-- -------------------------- -->
+            <table border="1" style="border-collapse:collapse;" cellpadding=5 bordercolor="lightgray">
+              <tr>
+                <td align="right" bgcolor="#E9E9E9">아이디</td>
+                <td><input type="text" name="uid" size="10"></td>
+              </tr>
+              <tr>
+                <td align="right" bgcolor="#E9E9E9">암 호</td>
+                <td><input type="password" name="pwd" size="10"></td>
+              </tr>
+            </table>
+            <!-- -------------------------- -->
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+            <!-- -------------------------- -->
+            <!-- 버튼을 클릭하면 자바스크립트 영역의 checkForm 함수 호출하기 -->
+            <!-- -------------------------- -->
+            <input type="button" value="로그인" onClick="checkForm();">
+            <input type="reset" value="초기화"><br><br>
+            <!-- reset을 품고있는 form 태그를 다 초기화 -->
+
+            <!-- 회원가입 글씨를 클릭하면 memberRegForm.html페이지를 열어주기 -->
+            <div style="cursor: pointer;" onclick="location.replace('memberRegForm.html')">[회원가입]</div>
+          
+          </td>
+        </tr>
+        <!-- -------------------------- -->
+      </table>
+      <!-- -------------------------- -->
+    </form>
+  </center>
+</body>
+
+</html>
