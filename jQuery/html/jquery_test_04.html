@@ -13,6 +13,7 @@
 		
 		$(document).ready(function () {
 		/*
+		//이현 코드
 			$("[name='hobby_all']").change(
 				function () {
 					var isAllChecked = $("[name='hobby_all']").prop("checked");
@@ -35,16 +36,31 @@
 					}
 				})
 */
+				// 정답 코드
+				// 변수 obj1를 선언하고 name='hobby_all'을 가진 태그를 관리하는 JQuery 객체를 생성해서
+				// 객체의 메위주를 obj1에 저장하기
 				var obj1 = $("[name='hobby_all']");
+				// 변수 obj2를 선언하고 name='hobby'을 가진 태그를 관리하는 JQuery 객체를 생성해서
+				// 객체의 메위주를 obj2에 저장하기
 				var obj2 = $("[name='hobby']");
 
+				//obj1에 저장된 JQuery 객체가 관리하는 태그에 change이벤트가 발생하면 실행할 구문 설정하기
 				obj1.change(function(){
 					//방법 1: if문 사용
 					/*
+					// 변수 isChecked선언하고 change 이벤트가 발생한 놈의 체크 여부를 저장하기
+					//<주의> 현재 this는 change 이벤트가 발생한 태그를 지칭하는 선택자
+					//--------------------------------------
 					var isChecked = $(this).prop("checked");
+					//변수 isChecked에 true가 저장되어 있으면
+					// 즉, change 이벤트가 발생한 놈이 체크가 되어있으면(전체가 체크되어있으면)
 					if(isChecked){
+						//변수 obj2에 저장된 JQuery객체가 관리하는 태그에 check를 넣기
 						obj2.prop("checked", true);
 					}else{
+					//변수 isChecked에 false가 저장되어 있으면
+					// 즉, change 이벤트가 발생한 놈이 체크가 안되어있으면
+					//변수 obj2에 저장된 JQuery객체가 관리하는 태그에 check를 빼기
 						obj2.prop("checked", false);
 					}
 					*/
@@ -52,7 +68,14 @@
 					//obj2의 체크 여부는 obj1의 체크 여부와 동일함
 					obj2.prop("checked", $(this).prop("checked"));
 				})
+				//obj2에 저장된 JQuery 객체가 관리하는 태그에 change이벤트가 발생하면 실행할 구문 설정하기
+					//즉, 독서, 운동, 여행, 수집으로 체크박스에 체크가 들어가거나 체크가 빠지면 실행할 구문 설정하기
 				obj2.change(function(){
+					//obj1에 저장된 JQuery 객체가 관리하는 태그에
+					// obj2.filter(":checked").length==obj2.length의 실행 결과에 따라 체크를 넣어주거나 빼주기
+					// 결과가 true이면 체크가 들어가는 것, flase면 체크가 빠지는 것
+					// 체크된 놈의 개수와 존재하는 놈의 개수가 동일하면
+						// -> 모두 체크되어 있다는 말
 					obj1.prop("checked", obj2.filter(":checked").length==obj2.length);
 					// 체크된 놈의 개수와 현재 있는 놈의 개수를 비교
 				})

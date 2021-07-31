@@ -1,46 +1,102 @@
-
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<script src="jquery-1.11.0.min.js"></script>
 	<script>
+		/*
 		$(document).ready(function() {
+			//이현태그
 			var tableObj = $(".dogList");
 			tableObj.find("tr:nth-child(1)").prepend("<th bgcolor='gray'>번호");
-				var table_no = tableObj.find("tr").index();
-				/*
+				//var table_no = tableObj.find("tr").index();
+				
 				tableObj.find("tr:nth-child(1)").nextAll().each(
 					function (i) {
 						$(this).prepend("<td>"+(i+1)+"</td>");
 					}
 				)
-				*/
-				
-				/*
+			//-------------------------------------------
 				//역순
+				
 				$(tableObj.find("tr:nth-child(1)").nextAll().get().reverse()).each(
 					function (i) {
 						$(this).prepend("<td>"+(i+1)+"</td>");
 					}
-				)*/
+				)
+			//------------------------------------------
 				tableObj.find("tr:nth-child(1)").nextAll().each(
 					function (i) {
 						$(this).prepend("<td>"+(tableObj.find("tr").length-i-1)+"</td>");
 					}
 				)
+				//========================================
+				//정답코드
+				//변수 obj선언 후 class='dogList'를 가진 태그를 관리하는 JQuery 객체를 생성하고 객체의 메위주를 변수 obj에 저장하기
+				var tableObj = $('.dogList');
+				//trObj는 6개의 tr태그를 관리
+				var trObj = tableObj.find("tr");
+				//trObj에 저장된 JQuery 객체가 관리하는 태그에 차례대로 접근해서 익명함수를 실행
+				trObj.each(function(i) {
+					//각 tr 태그의 첫째 자식으로 <th>번호 또는 <td>일련번호 삽입하기
+					//변수 thisObj를 선언하고 i번째 tr태그를 관리하는 JQuery 객체를 생성하고 객체의 메위주 저장하기
+					var thisObj = $(this); // i번째 tr 지칭, 각각의 tr
+
+					//익명함수의 매개변수 i가 0이면
+					if(i==0){
+						//i번째 tr태그 안의 첫째자식으로 <th>번호를 삽입하기
+						thisObj.prepend("<th bgcolor='gray'>번호");
+					}else{ //익명함수의 매개변수 i가 0이 아니면
+						//i번째 tr태그안의 첫째 자식으로 <th>i변수값을 삽입하기
+						//thisObj.prepend("<td>"+i);
+							//thisObj.prepend("<td>"+(thisObj.index()))
+							//역순
+							//thisObj.prepend("<td>"+(trObj.length-i))
+							thisObj.prepend("<td>"+(trObj.length-thisObj.index()))
+					}
+				})
 		});
+		*/
+		//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+		$(document).ready(function () {
+			var tableObj = $(".dogList");
+			var trObj = tableObj.find("tr");
+			//var no = 1;
+			var no = trObj.length - 1;
+			trObj.each(
+				function (i) {
+					var thisObj = $(this);
+					if (i == 0) {
+						thisObj.prepend("<th>번호")
+					}
+					else {
+						//증감연산자를 사용할 때는 증감연산자 위치에 주의해서 사용하기
+						//thisObj.prepend("<td>" + no++) //정순
+						thisObj.prepend("<td>" + no--) //역순
+					}
+				})
+		})
 	</script>
-	
+
 </head>
 
-<body><center>
-	<table class="dogList" border=1  cellpadding=4 style="border-collapse:collapse">
-		<tr><th bgcolor="gray">개이름
-		<tr><td>진도개
-		<tr><td>셰퍼드
-		<tr><td>비글
-		<tr><td>삽살개
-		<tr><td>풍산개
-	</table>
+<body>
+	<center>
+		<table class="dogList" border=1 cellpadding=4 style="border-collapse:collapse">
+			<tr>
+				<th bgcolor="gray">개이름
+			<tr>
+				<td>진도개
+			<tr>
+				<td>셰퍼드
+			<tr>
+				<td>비글
+			<tr>
+				<td>삽살개
+			<tr>
+				<td>풍산개
+
+		</table>
 </body>
+
 </html>
