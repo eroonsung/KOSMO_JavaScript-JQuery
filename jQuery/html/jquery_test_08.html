@@ -1,0 +1,106 @@
+<!-------------------------------------
+jquery_08_insertComma.html
+---------------------------------------
+	=>숫자만 입력받아 3자리마다 콤마를 제어 재입력하는 예제 -->
+<html>
+<meta charset="UTF-8">
+
+<head>
+	<script src="jquery-1.11.0.min.js"></script>
+	<script>
+		//-------------------------------------------
+		//$(document).ready(  function(){자스코딩}  );
+		//-------------------------------------------
+		// body 태그 안의 요소들을 읽어들인 후 익명함수 내부의 자스코딩을 실행.
+		$(document).ready(function () {
+			//class=money를 가진 태그를 관리하는 JQuery 객체의 메위주 얻기
+			var moneyObj = $(".money");
+			//커서를 class=money가 있는 입력양식에 들여놓음
+			moneyObj.focus();
+			//class=money를 가진 입력양식에서 [keyup 이벤트]가 발생하면 임의 자스 코딩 실행하기
+			moneyObj.keyup(function () {
+				//keyup이벤트가 발생한 입력 양식의 value값, 즉 유저가 입력한 데이터를 자바스크립트 영역으로 가져와 money 변수에 저장
+				var money = $(this).val();
+				//alert(money);
+				//
+				//숫자만 골라서 저장할 변수 선언
+				var num = "";
+				//money 변수 안의 데이터중 숫자만 골라 num 변수에 누적시킴
+				for (var i = 0; i < money.length; i++) {
+					//money 안의 문자열 중 i번째 문자 하나가 숫자문자면 num 변수에 축적하기
+					var str = money.charAt(i);
+					/*
+					num+=str.replace(/[^0-9]/g,"");
+					$(".msg").text(num);
+					*/
+					/*
+					if(str=='0'||str=='1'||str=='2'||str=='3'||str=='4'||str=='5'||str=='6'||str=='7'||str=='8'||str=='9'){
+						num+=str;
+						$(".msg").text(num);
+					}
+					if(new RegExp(/^[0-9]$/).test(str)){}
+					*/
+					if (("0123456789").indexOf(str) >= 0) {
+						num += str;
+						//$(".msg").text(num);
+					}
+				}
+				//숫자로 이루어져있을 때만 parseInt로 숫자로 바꿔줌
+				//바로 +""를 붙여주면서 다시 문자열로 바꿈
+				if(num.length>0){
+					num = parseInt(num,10)+"";
+				}
+				/*
+				if(num.length>1){
+					num = num.replace(/^0+/, '');
+				}
+				*/
+/*
+				//만약 num 변수 안의 문자 길이가 2자 이상이고 첫글자가 0으로 시작한다면
+				while (num.length>=2&&num.indexOf("0")==0) {
+					//num 변수 안의 문자에서 첫글자 이후를 복사해서 num 변수 안에 재저장하기
+					//(결국 첫글자가 없어지는 효과가 나타남)
+					num=num.substring(1);
+				}
+*/
+				//콤마를 포함한 최종 숫자 문자열을 저장할 변수 선언
+				var result = "";
+				/*
+				var str1 = num.charAt(num.length-1);
+				result= str1+result;
+				*/
+				var cnt = 0; // 한번 복사해올때마다 증가하는 횟수, 하나씩 낚아채는(복사해오는) 횟수
+				for (var i = num.length - 1; i >= 0; i--) {
+					cnt++;
+					if (cnt% 3 == 0) {
+						result = "," + num.charAt(i) + result;
+					} else {
+						result = num.charAt(i) + result;
+					}
+				}
+				
+				//result 변수 안의 데이터가 ,로 시작하면
+				//콤마의 인덱스 번호가 0일때(첫번째에 콤마가 나오면)
+				//if(result.charAt(0)==','){}
+				if(result.indexOf(",")==0){
+					//인덱스번호 1번인 곳부터 복사해와서 다시 result에 담음
+					//결국 첫글자 ,가 없어지는 효과가 나타남
+					result=result.substring(1);
+				}
+				
+				//키업 이벤트가 일어난 입력양식에 최종 result 변수안의 데이터 삽입하기
+				//$(this).val(num); // 문자 제거하고 숫자만 입력
+				$(this).val(result);// 콤마를 포함한 최종 문자열을 입력
+			})
+		});
+	</script>
+</head>
+
+
+<body>
+	<center>
+		<input type="text" class="money" name="money" size=20 maxlength=13>원<br>
+		<div class="msg"></div>
+</body>
+
+</html>
